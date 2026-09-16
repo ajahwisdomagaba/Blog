@@ -1,0 +1,112 @@
+### 1. `makemigrations`
+
+* Reads your Django models (`models.py`).
+* Detects changes (new models, fields, deleted fields, etc.).
+* Creates a **migration file** (Python code) inside the `migrations/` folder.
+* **It does not change the database.**
+
+Example:
+
+```bash
+python manage.py makemigrations
+```
+
+Suppose you have this model:
+
+```python
+from django.db import models
+
+class Student(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.IntegerField()
+```
+
+Running:
+
+```bash
+python manage.py makemigrations
+```
+
+creates a migration file like:
+
+```python
+# migrations/0001_initial.py
+
+
+
+### 2. `migrate`
+
+* Takes the migration files created by `makemigrations`.
+* Executes the SQL needed to update the database.
+* Creates or modifies tables.
+
+Example:
+
+```bash
+python manage.py migrate
+```
+
+This will create the **Student** table in the database.
+
+---
+
+### Workflow
+
+```text
+models.py
+     │
+     ▼
+python manage.py makemigrations
+     │
+     ▼
+Creates migration file (Python instructions)
+     │
+     ▼
+python manage.py migrate
+     │
+     ▼
+Converts the migration into SQL and executes it
+     │
+     ▼
+Database tables are created/updated
+```
+
+### Summary
+
+| Command                           | What it does                                                                |
+| --------------------------------- | --------------------------------------------------------------------------- |
+| `python manage.py makemigrations` | Creates migration files from your model changes.                            |
+| `python manage.py migrate`        | Applies those migration files to the database, creating or updating tables. |
+
+So, your understanding is essentially correct:
+
+* **`makemigrations`** converts your **model definitions** into **migration files** that Django understands.
+* **`migrate`** reads those migration files, generates the appropriate SQL, and executes it to create or update the tables in the database.
+
+
+
+OOP In python
+Class: Blueprint of related items or obejcts and functions
+
+Polymorphisim
+One items of many from
+
+Encapsulation
+Group all related items and hide irrelevant items
+
+Inheritance
+Process in which a model or object ic inherited from another section
+
+
+Blog.pk or blog.id
+
+uid contains 16 characters
+before makemigrations u have to specify the id
+
+
+get id 
+match it against database to confirm if it exists
+conditionally check if the id exists
+     reder the page with the blog post
+else
+     render a 404 code  
