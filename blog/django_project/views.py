@@ -45,7 +45,7 @@ def blog_post(request):
 
 # get the id 
 # check the db to see if theres any blog post with the ID exist
-# Conditionallt check if it exists
+# Conditionally check if it exists
     # Render the page with the blog post
 # Else
     # Redirect the user to /not found
@@ -54,7 +54,7 @@ def article(request, pk):
     #scan  through the blog tables
     # and get the first blog_post whose its ID 
     # Is the same  as the primary key
-    blog_posts = Blog.objects.filter(id=pk)  #use filters it doesn't raise error if page doesnt exist, gets goal is to retrieve a single objet unlike filter
+    blog_posts = Blog.objects.filter(id=pk)  #use filters it doesn't raise error if page doesn't exist, gets goal is to retrieve a single objet unlike filter
 
     if  blog_posts.exists():
         return render(request, "django_project/article.html", {"blog": blog_posts.first()})

@@ -14,7 +14,7 @@ from django_project.views import (
 urlpatterns = [
 
     # Django admin site
-    path("admin/", admin.site.urls),
+    path("admin/", admin.site.urls), #removing  this automatically removes the page making the admin dashboard unaccessible
 
     # Home page
     path("", homepage),
@@ -24,11 +24,10 @@ urlpatterns = [
 
     # Article page
     path("article/<int:pk>", article, name="article"),
-
+#<int:pk> url capturing
     # Create blog page
     path("create_blog/", blog_post, name="create_blog"),
 
     #Page not found
     path("not_found/", not_found,)
-
 ]

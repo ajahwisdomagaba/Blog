@@ -8,3 +8,6 @@ class Blog(models.Model):
     body = models.TextField()
     author = models.CharField(max_length=100)
     published_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):  #This helps us reference in dashboard with the headline of each blog
+        return f"{self.headline} by {self.author}"
