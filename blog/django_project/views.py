@@ -61,5 +61,13 @@ def article(request, pk):
     else:
         return redirect("/not-found")
 
-def not_found(request):
-    return HttpResponse("Not found")
+def delete_blog(request, pk):
+    #this finds the post by its primary key or return error if not found
+    post = Blog.objects.filter(pk = pk)
+    #function to delete from the db
+    post.delete()
+    #redirect to home
+    return redirect('home')
+
+def not_found(request, exception=None):
+    return render(request, "django_project/404.html", status=404)

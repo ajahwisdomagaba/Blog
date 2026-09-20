@@ -85,28 +85,157 @@ So, your understanding is essentially correct:
 
 
 
-OOP In python
-Class: Blueprint of related items or obejcts and functions
+# OOP in Python
 
-Polymorphisim
-One items of many from
+### 1. Class
 
-Encapsulation
-Group all related items and hide irrelevant items
+A **class** is a blueprint or template for creating related **objects** and defining their **attributes and methods (functions)**.
 
-Inheritance
-Process in which a model or object ic inherited from another section
+Example:
+
+```python
+class Blog:
+    headline = ""
+    body = ""
+    author = ""
+```
+
+---
+
+### 2. Polymorphism
+
+**Polymorphism** means **“many forms.”**
+
+It allows the same method or operation to behave differently depending on the object using it.
+
+Example:
+
+```python
+class Dog:
+    def sound(self):
+        print("Woof")
+
+class Cat:
+    def sound(self):
+        print("Meow")
+```
+
+Both classes have `sound()`, but they produce different results.
+
+---
+
+### 3. Encapsulation
+
+**Encapsulation** means **grouping related data and methods together inside a class** and controlling access to the internal details.
+
+In simple terms:
+
+> **Keep related things together and hide details that other parts of the program don't need to access directly.**
+
+---
+
+### 4. Inheritance
+
+**Inheritance** is the process where one class **inherits attributes and methods from another class**.
+
+Example:
+
+```python
+class Animal:
+    def eat(self):
+        print("Eating")
 
 
-Blog.pk or blog.id
+class Dog(Animal):
+    def bark(self):
+        print("Barking")
+```
 
-uid contains 16 characters
-before makemigrations u have to specify the id
+`Dog` inherits the `eat()` method from `Animal`.
 
+---
 
-get id 
-match it against database to confirm if it exists
-conditionally check if the id exists
-     reder the page with the blog post
-else
-     render a 404 code  
+# Django Blog: `blog.pk` vs `blog.id`
+
+In Django, both can refer to the **primary key** of a model.
+
+For example:
+
+```python
+blog.id
+```
+
+gets the ID of the blog post.
+
+```python
+blog.pk
+```
+
+gets the **primary key** of the blog post.
+
+If `id` is the primary key, then:
+
+```python
+blog.id == blog.pk
+```
+
+will normally be `True`.
+
+### Why use `pk`?
+
+`pk` is more generic. If you later change which field is the primary key, `blog.pk` will still refer to the correct primary-key field.
+
+---
+
+# Getting a Blog by ID
+
+If you want to get a blog post using its ID, you can do:
+
+```python
+blog = Blog.objects.get(id=blog_id)
+```
+
+Django searches the database for a blog whose `id` matches `blog_id`.
+
+However, if the blog doesn't exist, `.get()` raises a `Blog.DoesNotExist` exception.
+
+A common Django approach is:
+
+```python
+from django.shortcuts import get_object_or_404
+
+def blog_detail(request, blog_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+
+    return render(request, "blog_detail.html", {
+        "blog": blog
+    })
+```
+
+### What happens here?
+
+```text
+User requests /blog/16/
+          ↓
+Get the ID → 16
+          ↓
+Search the Blog database
+          ↓
+Does blog ID 16 exist?
+       ↙       ↘
+     YES        NO
+      ↓          ↓
+Render blog    Return 404
+```
+
+So your note:
+
+> get ID → match it against database → check if it exists → render the blog → otherwise 404
+
+is essentially correct.
+
+### About the 16-character UID
+
+If you're using a **UUID** instead of Django's default integer `id`, that's different. A UUID is commonly used as a unique identifier, but it isn't necessarily exactly 16 characters. For example, Django's `UUIDField` normally stores a 128-bit UUID.
+
+So if your plan is to use a custom UUID for your blog posts, your model and URL should be designed around that specifically.

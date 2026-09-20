@@ -7,27 +7,33 @@ from django_project.views import (
     about,
     article,
     blog_post, 
-    not_found
+    not_found,
+    delete_blog
 )
 
 
 urlpatterns = [
-
     # Django admin site
-    path("admin/", admin.site.urls), #removing  this automatically removes the page making the admin dashboard unaccessible
+    path("admin/", admin.site.urls),
 
-    # Home page
-    path("", homepage),
+    # Home page (added name='home')
+    path("", homepage, name="home"),
 
     # About page
-    path("hello/", about, name="about"),
+    path("about/", about, name="about"),
 
-    # Article page
-    path("article/<int:pk>", article, name="article"),
-#<int:pk> url capturing
+    # Article page (added trailing slash)
+    path("article/<int:pk>/", article, name="article"),
+
     # Create blog page
     path("create_blog/", blog_post, name="create_blog"),
 
-    #Page not found
-    path("not_found/", not_found,)
+    # Page not found
+    path("not_found/", not_found, name="not_found"),
+
+    #delete
+    path("article/<int:pk>/delete/", delete_blog, name = "delete_blog")
 ]
+
+# Catches any missed or invalid route across your entire project:
+handler404 = "django_project.views.not_found"
