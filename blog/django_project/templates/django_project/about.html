@@ -1,13 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <h1>Welcome to the Django Blog</h1>
-  <p>This is a an About page.</p>
+{% extends "django_project/base.html" %}
 
-</body>
-</html>
+{% block title %}About — Lumen{% endblock %}
+
+{% block content %}
+    <main class="create-container">
+        <h1 class="page-title">About Lumen</h1>
+        <p class="page-subtitle">A journal for intentional design and deep thinking.</p>
+
+        <div class="editor-card">
+            <p class="page-subtitle" style="margin-bottom: 0;">
+                Lumen is a curated journal exploring intentional design, deep
+                thinking, and modern editorial aesthetics. It is a space for essays
+                written with care — quiet, considered, and meant to be read slowly.
+            </p>
+        </div>
+    </main>
+{% endblock %}

@@ -239,3 +239,41 @@ is essentially correct.
 If you're using a **UUID** instead of Django's default integer `id`, that's different. A UUID is commonly used as a unique identifier, but it isn't necessarily exactly 16 characters. For example, Django's `UUIDField` normally stores a 128-bit UUID.
 
 So if your plan is to use a custom UUID for your blog posts, your model and URL should be designed around that specifically.
+
+
+Template tags and filters dl
+
+
+User Authentication:
+- User Authentication is the process of verifying the identity of a user.
+- User Authentication is used to ensure that only authorized users can access the system.
+- User Authentication is used to ensure that only authorized users can access the system.
+
+AUTHORIATION
+- Authorization is the process of verifying the identity of a user.
+- Authorization is used to ensure that only authorized users can access the system.
+- Authorization is used to ensure that only authorized users can access the system.
+
+RELATIONSHIP BETWEEN USER AUTHENTICATION AND AUTHORIZATION
+- User Authentication is the process of verifying the identity of a user
+- Authorization is the process of verifying the identity of a user
+- User Authentication is used to ensure that only authorized users can access the system
+- Authorization is used to ensure that only authorized users can access the system
+- User Authentication is used to ensure that only authorized users can access the system
+
+DIFFERENCES BETWEEN USER AUTHENTICATION AND AUTHORIZATION
+- User Authentication is the process of verifying the identity of a user
+- Authorization is the process of verifying the identity of a user
+- User Authentication is used to ensure that only authorized users can access the system
+- Authorization is used to ensure that only authorized users can access the system
+- User Authentication is used to ensure that only authorized users can access the system
+
+
+RELATIONSHIP BETWEEN TABLES IN A DATABASE
+-one-to-one relationship: one table is related to one table
+-one-to-many relationship: one table is related to many tables
+-many-to-many relationship: many tables are related to many tables
+
+foreign key: a field in one table that references the primary key of another table
+primary key: a field in a table that uniquely identifies each row in the table
+onetoonefield: a field in one table that references the primary key of another table

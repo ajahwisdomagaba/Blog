@@ -1,111 +1,8 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aesthetic Journal</title>
+{% extends "django_project/base.html" %}
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Italiana&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-    />
+{% block title %}Aesthetic Journal{% endblock %}
 
-    <style>
-      /* --- Color Palette & Variables --- */
-      :root {
-        --bg-color: #0d0d0f;
-        /* Deep obsidian dark background */
-        --card-bg: rgba(255, 255, 255, 0.03);
-        /* Translucent glass card background */
-        --card-hover-bg: rgba(255, 255, 255, 0.05);
-        --text-primary: #e8e6e1;
-        /* Soft champagne light text */
-        --text-muted: #949086;
-        /* Warm muted grey */
-        --accent: #d4a373;
-        /* Muted gold / Champagne accent */
-        --accent-glow: rgba(212, 163, 115, 0.15);
-        --border-color: rgba(255, 255, 255, 0.07);
-        --border-hover: rgba(212, 163, 115, 0.35);
-
-        --font-display: "Italiana", serif;
-        --font-sans: "Plus Jakarta Sans", sans-serif;
-      }
-
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      body {
-        background-color: var(--bg-color);
-        color: var(--text-primary);
-        font-family: var(--font-sans);
-        line-height: 1.8;
-        -webkit-font-smoothing: antialiased;
-        min-height: 100vh;
-        /* Ambient background glowing orbs */
-        background-image:
-          radial-gradient(
-            circle at 15% 20%,
-            rgba(212, 163, 115, 0.06) 0%,
-            transparent 45%
-          ),
-          radial-gradient(
-            circle at 85% 80%,
-            rgba(138, 100, 70, 0.05) 0%,
-            transparent 50%
-          );
-        background-attachment: fixed;
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      }
-
-      /* --- Stylish Header --- */
-      .header {
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 4rem 2rem 3rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid var(--border-color);
-      }
-
-      .brand {
-        font-family: var(--font-display);
-        font-size: 2.2rem;
-        letter-spacing: 1px;
-        color: var(--text-primary);
-      }
-
-      .nav-links {
-        display: flex;
-        gap: 2.5rem;
-        list-style: none;
-      }
-
-      .nav-links a {
-        font-size: 0.8rem;
-        color: var(--text-muted);
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        font-weight: 500;
-      }
-
-      .nav-links a:hover {
-        color: var(--accent);
-      }
-
-      /* --- Container --- */
+{% block extra_css %}
       .container {
         max-width: 960px;
         margin: 0 auto;
@@ -118,7 +15,6 @@
         gap: 4.5rem;
       }
 
-      /* --- Blog Feed --- */
       .posts-feed {
         display: flex;
         flex-direction: column;
@@ -130,16 +26,13 @@
         border: 1px solid var(--border-color);
         padding: 3rem;
         border-radius: 20px;
-
         -webkit-backdrop-filter: blur(12px);
         backdrop-filter: blur(12px);
-
         transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         position: relative;
         overflow: hidden;
       }
 
-      /* Subtle glow line at top of cards on hover */
       .post-card::before {
         content: "";
         position: absolute;
@@ -170,18 +63,29 @@
         opacity: 1;
       }
 
-      /* Headline */
+      .post-headline-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
       .post-card h2 {
         font-family: var(--font-display);
         font-size: 2.4rem;
         line-height: 1.25;
         font-weight: 400;
-        margin-bottom: 1rem;
+        margin-bottom: 0;
         color: var(--text-primary);
         letter-spacing: 0.5px;
+        flex: 1;
       }
 
-      /* Author & Published At Meta */
+      .post-card .btn-edit {
+        margin-top: 0.4rem;
+      }
+
       .post-meta {
         font-size: 0.8rem;
         color: var(--text-muted);
@@ -203,7 +107,6 @@
         opacity: 0.4;
       }
 
-      /* Body Excerpt */
       .post-body {
         font-size: 0.95rem;
         color: var(--text-muted);
@@ -212,14 +115,14 @@
         margin-bottom: 2rem;
       }
 
-      /* Read More Button */
       .post-footer {
         display: flex;
         align-items: center;
         gap: 1.25rem;
       }
 
-      .read-more, .btn-delete {
+      .read-more,
+      .btn-delete {
         display: inline-flex;
         align-items: center;
         gap: 0.75rem;
@@ -235,32 +138,39 @@
         transition: all 0.3s ease;
       }
 
-      .read-more .arrow {
+      .btn-delete {
+        font-family: inherit;
+        line-height: inherit;
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+      }
+
+      .read-more .arrow,
+      .btn-delete .arrow {
         font-size: 1rem;
+        line-height: 1;
         transition: transform 0.3s ease;
       }
 
-      .post-card:hover .read-more {
+      .read-more:hover {
         background: var(--accent);
         color: #0d0d0f;
         border-color: var(--accent);
         box-shadow: 0 0 15px var(--accent-glow);
       }
 
-      .post-card:hover .read-more .arrow {
+      .read-more:hover .arrow {
         transform: translateX(4px);
       }
 
-
-/* Card*/
-.post-card:hover .btn-delete {
-background: #c25953;
-  color: #0d0d0f;
-  border-color: #c25953;
-  box-shadow: 0 0 15px rgba(194, 89, 83, 0.35);
-  transform: translateY(-1px);
-}
-
+      .btn-delete:hover {
+        background: #c25953;
+        color: #0d0d0f;
+        border-color: #c25953;
+        box-shadow: 0 0 15px rgba(194, 89, 83, 0.35);
+        transform: translateY(-1px);
+      }
 
       .empty-feed {
         color: var(--text-muted);
@@ -268,7 +178,6 @@ background: #c25953;
         padding: 2rem 0;
       }
 
-      /* --- Sidebar Widgets --- */
       .sidebar {
         display: flex;
         flex-direction: column;
@@ -338,18 +247,6 @@ background: #c25953;
         box-shadow: 0 0 20px var(--accent-glow);
       }
 
-      /* --- Footer --- */
-      .footer {
-        text-align: center;
-        padding: 4rem 1.5rem;
-        border-top: 1px solid var(--border-color);
-        font-size: 0.8rem;
-        color: var(--text-muted);
-        letter-spacing: 1px;
-        font-weight: 300;
-      }
-
-      /* --- Responsive Design --- */
       @media (max-width: 800px) {
         .content-grid {
           grid-template-columns: 1fr;
@@ -363,64 +260,34 @@ background: #c25953;
         .post-card h2 {
           font-size: 1.9rem;
         }
-
-        .header {
-          padding-top: 2.5rem;
-        }
       }
-    </style>
-  </head>
+{% endblock %}
 
-  <body>
-<header class="header">
-      <a href="{% url 'home' %}" class="brand">LUMEN.</a>
-      <ul class="nav-links">
-        <li><a href="{% url 'home' %}">Essays</a></li>
-        <li><a href="{% url 'about' %}">About</a></li>
-        <li><a href="{% url 'create_blog' %}">Write</a></li>
-      </ul>
-    </header>
-
-    <!-- Main Container -->
+{% block content %}
     <div class="container">
       <div class="content-grid">
-        <!-- Posts Feed with all required properties -->
         <main class="posts-feed">
           {% for blog in blogs %}
-
-          
-
           <article class="post-card">
-            <!-- 1. Headline -->
-            <h2><a href="{% url 'article' blog.pk %}">{{ blog.headline }}</a></h2>
-{{blog.id}}
-            <!-- 2 & 3. Author & Published At -->
+            <div class="post-headline-row">
+              <h2><a href="{% url 'article' blog.pk %}">{{ blog.headline }}</a></h2>
+              <a href="{% url 'edit_blog' blog.pk %}" class="btn-edit">Edit</a>
+            </div>
             <div class="post-meta">
               <span class="author">{{ blog.author }}</span>
               <span class="dot">•</span>
               <time datetime="{{ blog.published_at }}">
                 {{ blog.published_at }}
               </time>
-              {% comment %} <time datetime="{{ blog.published_at|date:'c' }}">
-                  {{ blog.published_at|date:"F j, Y" }}
-                </time> {% endcomment %}
             </div>
-
-            <!-- 4. Body Excerpt -->
-            <div class="post-body">
-              <p>{{ blog.body | truncatechars:140}}</p>
-            </div>
-
-            <!-- Read More Link -->
-<div class="post-footer">
-              {% comment %} <a href="article/{{blog.pk}}" class="read-more"> {% endcomment %}
+            <div class="post-body"> <p>{{ blog.body|truncatechars:140 }}</p></div>
+            <div class="post-footer">
               <a href="{% url 'article' blog.pk %}" class="read-more">
                 Read Essay <span class="arrow">→</span>
               </a>
-
-              <form action="{% url 'delete_blog' blog.pk %}" method="POST" onsubmit="return confirm('Are you sure you want to delete this blog?');">
+              <form action="{% url 'delete_blog' blog.pk %}" method="post" onsubmit="return confirm('Are you sure you want to delete this blog?');">
                 {% csrf_token %}
-                <button type="submit" class="btn-delete">Delete <span class="arrow">×</span> </button>
+                <button type="submit" class="btn-delete">Delete <span class="arrow">×</span></button>
               </form>
             </div>
           </article>
@@ -429,7 +296,6 @@ background: #c25953;
           {% endfor %}
         </main>
 
-        <!-- Sidebar -->
         <aside class="sidebar">
           <div class="widget about-widget">
             <h3 class="widget-title">About</h3>
@@ -452,10 +318,4 @@ background: #c25953;
         </aside>
       </div>
     </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <p>&copy; 2026 LUMEN JOURNAL. ALL RIGHTS RESERVED.</p>
-    </footer>
-  </body>
-</html>
+{% endblock %}

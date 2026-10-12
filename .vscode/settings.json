@@ -1,5 +1,21 @@
 {
   "cSpell.words": [
     "makemigrations"
-  ]
+  ],
+  "python.defaultInterpreterPath": "${workspaceFolder}/django_venv/Scripts/python.exe",
+  "djlint.useVenv": false,
+  "djlint.executablePath": "C:\\Users\\Hp\\AppData\\Roaming\\Python\\Python314\\Scripts\\djlint.exe",
+  "djlint.pythonPath": "C:\\Python314\\python.exe",
+  "files.associations": {
+    "**/templates/**/*.html": "django-html"
+  },
+  "[django-html]": {
+    "editor.defaultFormatter": "monosans.djlint",
+    "djlint.enableLinting": true,
+    "djlint.profile": "django"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "monosans.djlint",
+    "djlint.profile": "django"
+  }
 }
