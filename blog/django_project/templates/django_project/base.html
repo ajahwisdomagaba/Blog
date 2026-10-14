@@ -98,6 +98,23 @@
         color: var(--accent);
       }
 
+      .nav-links .btn-logout {
+        background: none;
+        border: none;
+        padding: 0;
+        font-family: inherit;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-weight: 500;
+        cursor: pointer;
+      }
+
+      .nav-links .btn-logout:hover {
+        color: var(--accent);
+      }
+
       .site-content {
         flex: 1;
       }
@@ -316,9 +333,21 @@
     <header class="header">
       <a href="{% url 'home' %}" class="brand">LUMEN.</a>
       <ul class="nav-links">
-        <li><a href="{% url 'home' %}">Essays</a></li>
         <li><a href="{% url 'about' %}">About</a></li>
-        <li><a href="{% url 'create_blog' %}">Write</a></li>
+        {% if user.is_authenticated %} 
+        {% comment %} if the user is authenticated, show the write and logout buttons {% endcomment %}
+        <li><a href="{% url 'my_blogs' %}">My Blogs</a></li>
+          <li><a href="{% url 'create_blog' %}">Write</a></li>
+          <li><form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn-logout">Log out</button>
+          </form></li>
+        {% else %} 
+        
+        {% comment %} if the user is not authenticated, show the login and sign up buttons {% endcomment %}
+          <li><a href="{% url 'login' %}">Log in</a></li>
+          <li><a href="{% url 'signup' %}">Sign up</a></li>
+        {% endif %}
       </ul>
     </header>
 
@@ -327,7 +356,7 @@
     </div>
 
     <footer class="footer">
-      <p>&copy; 2026 LUMEN JOURNAL. ALL RIGHTS RESERVED.</p>
+      <p>&copy; 2026 <a href="https://www.lumenjournal.com" target="_blank">Lumen Journal</a>. ALL RIGHTS RESERVED.</p>
     </footer>
   </body>
 </html>

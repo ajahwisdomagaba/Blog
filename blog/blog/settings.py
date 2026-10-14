@@ -127,3 +127,9 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+# Send people home after they log out, instead of the default logged-out page.
+LOGOUT_REDIRECT_URL = "home"
+
+# Send people home after they log in, instead of the default logged-in page.
+LOGIN_REDIRECT_URL = "home"

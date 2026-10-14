@@ -12,7 +12,8 @@ from django_project.views import (
     delete_blog,
     edit_blog,
     register,
-    login
+    login,
+    my_blogs
 )
 
 
@@ -33,6 +34,9 @@ urlpatterns = [
 
     # About page
     path("about/", about, name="about"),
+
+    #userblogs
+    path("my_blogs/", my_blogs, name="my_blogs"),
 
     # Article page (added trailing slash)
     path("article/<int:pk>/", article, name="article"),

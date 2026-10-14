@@ -182,7 +182,9 @@
         <header class="article-header">
             <div class="article-title-row">
                 <h1 class="article-title">{{ blog.headline }}</h1>
+                {% if user == blog.author %}
                 <a href="{% url 'edit_blog' blog.pk %}" class="btn-edit">Edit</a>
+                {% endif %}
             </div>
 
             <div class="article-meta">

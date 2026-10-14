@@ -67,10 +67,26 @@ def article(request, pk):
     else:
         return redirect("/not-found")
 
+
+@login_required
+# view blogs belonging to logged in user
+def my_blogs(request):
+    blog_posts = Blog.objects.filter(author=request.user).order_by("-published_at")
+    return render(request, "django_project/my_blogs.html", {"blog": blog_posts})
+
+
+#if using reverse accessor
+#user_posts = user.blog_set.all()
+
+
 @login_required
 def delete_blog(request, pk):
     #this finds the post by its primary key or return error if not found
-    post = Blog.objects.filter(pk = pk)
+    post = Blog.objects.filter(pk=pk).first()
+    if not post:
+        return redirect("/not-found")
+    if post.author != request.user:
+        return redirect("/not-found")
     #function to delete from the db
     post.delete()
     #redirect to home
@@ -81,7 +97,9 @@ def edit_blog(request, pk):
     # Find the blog post, or send the user to not-found
     blog = Blog.objects.filter(pk=pk).first()
     if not blog:
-        return redirect("/not-found")
+        return HttpResponse("Blog not found.")
+    if blog.author != request.user:
+        return HttpResponse("You are not authorized to edit this blog.")
 
     form = BlogForm(instance=blog)
 
@@ -113,14 +131,14 @@ def login(request):
             auth_login(request, user)
             return redirect("home")
         error = "Username or password is incorrect."
-    return render(request, "django_project/login.html", {"error": error})
+    return render(request, "signup/login.html", {"error": error})
 
 
 def register(request):
     error = None
     if request.method == "POST":
-        password = request.POST.get("password", "")
-        confirm_password = request.POST.get("confirm_password", "")
+        password = request.POST.get("password1", "")
+        confirm_password = request.POST.get("password2", "")
         if password != confirm_password:
             error = "Passwords do not match."
         else:
@@ -140,4 +158,4 @@ def register(request):
                 for messages in form.errors.values()
                 for message in messages
             )
-    return render(request, "django_project/signup.html", {"error": error})
+    return render(request, "signup/signup.html", {"error": error})
